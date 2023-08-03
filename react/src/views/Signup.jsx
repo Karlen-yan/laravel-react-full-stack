@@ -8,10 +8,11 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmationRef = useRef();
+
   const [errors, setErrors] = useState(null);
   const { setUser, setToken } = useStateContext();
 
-  const onSubmit = ev => {
+  const onSubmit = (ev) => {
     ev.preventDefault();
 
     const payload = {
@@ -20,12 +21,12 @@ export default function Signup() {
       password: passwordRef.current.value,
       password_confirmation: passwordConfirmationRef.current.value
     };
-
     axiosClient
-      .post("/signup", payload)
-      .then(({ data }) => {
-        setUser(data.user);
-        setToken(data.token);
+    .post("/signup", payload)
+    .then(({ data }) => {
+      setUser(data.user);
+      setToken(data.token);
+      // console.log(data);
       })
       .catch(err => {
         const response = err.response;
@@ -40,8 +41,8 @@ export default function Signup() {
       <h1 className="title">Signup for free</h1>
       {errors &&
         <div className="alert">
-          {Object.keys(errors).map((key, index) =>
-            <p key={index}>
+          {Object.keys(errors).map(key =>
+            <p key={key}>
               {errors[key][0]}
             </p>
           )}
